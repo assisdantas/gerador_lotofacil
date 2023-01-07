@@ -1,12 +1,21 @@
-# simulação de jogos lotofácil
-# usando sorteio de bolas ponderados
-# com base nas estátisticas de resultados
-# anteriores e geração de jogos pseudo-aleatórios.
+#   Gerador de jogos da lotofácil usando pesos estátisticos obtidos dos 2.707
+#   resultados anteriores. Cada bola tem uma dezena com maior e menor probalidade
+#   de ser sorteado, estas foram mapeadas e pesadas usando estátisca. Cada dezena
+#   tem um peso específico que é levado em conta na hora da escolha pseudo-aleatória
+#   para geração dos jogos.
+#
+#   Resultados podem ser baixados em: https://asloterias.com.br/download-todos-resultados-lotofacil
+#   Arquivo para processamento do resultado pode ser feito com PowerBI com modelo em: 
+#   https://github.com/assisdantas/gerador_lotofacil
+#
+
 
 import random
 import numpy as np
+import time
 
 # bolas do bilhete
+fibonacci = [1, 2, 3, 5, 8, 13, 21]
 bolas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 jogos = []
 jogo = []
@@ -104,29 +113,91 @@ pd_bola15 = [0.048762468, 0.046915405, 0.044698929, 0.043960103, 0.043221278,
 
 j = 1
 b = 1
-
+mult = 0
+primos = 0
+novo = True
+tentativa = 1
+total_tenta = 0
 pesos = ("pd_bola%s" %b)
 
 num_jogos = int(input("Quantos jogos gerar? "))
 qtd_bolas = int(input("Quantas dezenas por jogo? "))
 
-while j <= num_jogos:
-        
+def conta_pares(jogo):
+    pares = 0
+    impar = 0
+    
+    for num in jogo:
+        if(num % 2) == 0:
+            pares += 1
+        else:
+            impar += 1
+    
+    return pares, impar        
+
+inicio = time.time()
+
+while (j <= num_jogos) or (novo == True):
+           
     while len(jogo) < qtd_bolas:
-          
+        
         bolas_melhores = random.choices(bolas, weights=globals()[pesos], k=15)
-        bola = random.choice(bolas_melhores)
+        bola = np.random.choice(bolas_melhores)
+        
         if bola not in jogo:
             jogo.append(bola)
-            # print("Usando população %s para bola %i dezena selecionada: %s " %(pesos, b, jogo[-1]))
             b += 1
             pesos = ("pd_bola%s" %b)
+
+        n = jogo[-1]
+        
+        for count in range(2, n):
+            if (n % count == 0):
+                mult += 1
+                
+        if (mult == 0):
+            primos += 1
+            
+        jogo_fib = len(set(jogo) & set(fibonacci))
+        media = (sum(jogo) / qtd_bolas)
     
-    #if jogo not in jogos:        
-    j += 1
-    jogos.append(jogo)
-    jogo = []
-    b = 1 
-    pesos = ("pd_bola%s" %b)
-    
-print("Gerado(s) %i jogos com %i dezenas:" %(num_jogos, qtd_bolas), jogos)
+    if (jogo not in jogos) and (primos >= 3 and primos <= 6) and (sum(jogo) >= 166 and sum(jogo) <= 227) and (jogo_fib >= 2 and jogo_fib <= 5) and (media >= 13 and media <= 15):
+        print("")
+        print("===========================================================================")
+        print("Jogo %s: " %j, jogo)
+        print("===========================================================================")
+        print("Estátisticas:")
+        print("---------------------------------------------------------------------------")
+        print("Passos necessários:", tentativa)
+        print("Primos: %s [i] Melhor entre 3 e 6" %primos)
+        print("Soma:", sum(jogo), "[i] Melhor entre 166 e 227")
+        print("Fibbonacci:", jogo_fib, "[i] Melhor entre 2 e 5")
+        print("Média:", media, "[i] Melhor entre 13 e 15") 
+        print("Pares/Ímpares:", conta_pares(jogo), "[i] Melhor 6~9/9~6")       
+        
+        j += 1
+        jogos.append(jogo)
+        jogo = []
+        b = 1
+        primos = 0
+        mult = 0
+        total_tenta = total_tenta + tentativa
+        tentativa = 0
+        pesos = ("pd_bola%s" %b)
+        novo = False
+    else:
+        novo = True
+        #print("\033[K Tentativa %s para gerar o jogo %s" %(tentativa, j), end="\r")
+        #print("\033[K Jogo: ", jogo, end="\r")
+        tentativa += 1
+        jogo = []
+        b = 1
+        primos = 0
+        mult = 0
+        pesos = ("pd_bola%s" %b)
+
+fim = time.time()        
+tempo_total = (fim - inicio)
+
+print('''
+      Gerado(s) %i jogos com %i dezenas em um total de %i passos em %.2f segundos.''' %(num_jogos, qtd_bolas, total_tenta, tempo_total))
