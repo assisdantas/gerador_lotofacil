@@ -12,10 +12,10 @@ python joga.py
 ```
 
 ### Número de jogos
-Escolha a quantidade de jogos que deseja que o script gere.
+Escolha a quantidade de jogos que deseja que o script gere, quanto maior a quantidade maior o tempo e memória utilizada.
 
-### Número de dezenas
+### Número de dezenas [15 ou 16]
 Escolha quantas dezenas o script deve colocar em cada jogo. O limite é 16 devido a verificação das estátisticas que são mais difíceis de alcançar caso o jogo possua mais de 16 dezenas por jogo. As estatísticas limitam-se a 15 dezenas pois todos os resultados anteriores possuem 15 dezenas.
 
-### Número de dezenas por escolha
-Escolha quantas dezenas por passo o script deve eleger para ser selecionado uma pseudo-aleatóriamente e adicionado ao jogo.
+### Número de dezenas por escolha [Entre 10 e 20]
+Escolha quantas dezenas por passo o script deve eleger para que seja selecionado aleatóriamente 1 e adicionado ao jogo por passo.
