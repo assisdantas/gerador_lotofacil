@@ -121,8 +121,11 @@ total_tenta = 0
 pesos = ("pd_bola%s" %b)
 
 num_jogos = int(input("Quantos jogos gerar? "))
-qtd_bolas = int(input("Quantas dezenas por jogo? "))
+qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
 
+while (qtd_bolas < 15) or (qtd_bolas > 16):
+    qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
+    
 def conta_pares(jogo):
     pares = 0
     impar = 0
@@ -147,6 +150,8 @@ while (j <= num_jogos) or (novo == True):
         if bola not in jogo:
             jogo.append(bola)
             b += 1
+            if (b == 16):
+                b = 1
             pesos = ("pd_bola%s" %b)
 
         n = jogo[-1]
@@ -187,8 +192,7 @@ while (j <= num_jogos) or (novo == True):
         novo = False
     else:
         novo = True
-        #print("\033[K Tentativa %s para gerar o jogo %s" %(tentativa, j), end="\r")
-        #print("\033[K Jogo: ", jogo, end="\r")
+        # print('''\033[K Tentativa %s para gerar o jogo %s. Jogo: %s''' %(tentativa, j, jogo), end="\r")
         tentativa += 1
         jogo = []
         b = 1
