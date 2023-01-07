@@ -13,6 +13,7 @@
 import random
 import numpy as np
 import time
+import csv
 
 # bolas do bilhete
 fibonacci = [1, 2, 3, 5, 8, 13, 21]
@@ -169,7 +170,7 @@ while (j <= num_jogos) or (novo == True):
     if (jogo not in jogos) and (primos >= 3 and primos <= 6) and (sum(jogo) >= 166 and sum(jogo) <= 227) and (jogo_fib >= 2 and jogo_fib <= 5) and (media >= 13 and media <= 15):
         print("")
         print("===========================================================================")
-        print("Jogo %s: " %j, jogo)
+        print("Jogo %s: " %j, sorted(jogo))
         print("===========================================================================")
         print("Estátisticas:")
         print("---------------------------------------------------------------------------")
@@ -181,7 +182,7 @@ while (j <= num_jogos) or (novo == True):
         print("Pares/Ímpares:", conta_pares(jogo), "[i] Melhor 6~9/9~6")       
         
         j += 1
-        jogos.append(jogo)
+        jogos.append(sorted(jogo))
         jogo = []
         b = 1
         primos = 0
@@ -201,7 +202,15 @@ while (j <= num_jogos) or (novo == True):
         pesos = ("pd_bola%s" %b)
 
 fim = time.time()        
+
+with open('jogos.csv', 'w', newline='') as jogos_csv:
+    escritor = csv.writer(jogos_csv)
+    escritor.writerows(jogos)
+
+print('''
+      Salvo no arquivo 'jogos.csv'. Verifique diretório.''')
+
 tempo_total = (fim - inicio)
 
 print('''
-      Gerado(s) %i jogo(s) com %i dezenas em um total de %i passos em %.2f segundos.''' %(num_jogos, qtd_bolas, total_tenta, tempo_total))
+      Gerado(s) %i jogos com %i dezenas em um total de %i passos em %.2f segundos.''' %(num_jogos, qtd_bolas, total_tenta, tempo_total))
