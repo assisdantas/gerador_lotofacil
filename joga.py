@@ -204,4 +204,4 @@ fim = time.time()
 tempo_total = (fim - inicio)
 
 print('''
-      Gerado(s) %i jogos com %i dezenas em um total de %i passos em %.2f segundos.''' %(num_jogos, qtd_bolas, total_tenta, tempo_total))
+      Gerado(s) %i jogo(s) com %i dezenas em um total de %i passos em %.2f segundos.''' %(num_jogos, qtd_bolas, total_tenta, tempo_total))
