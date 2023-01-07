@@ -18,4 +18,4 @@ Escolha a quantidade de jogos que deseja que o script gere, quanto maior a quant
 Escolha quantas dezenas o script deve colocar em cada jogo. O limite é 16 devido a verificação das estátisticas que são mais difíceis de alcançar caso o jogo possua mais de 16 dezenas por jogo. As estatísticas limitam-se a 15 dezenas pois todos os resultados anteriores possuem 15 dezenas.
 
 ### Número de dezenas por passo [Entre 10 e 20]
-Escolha quantas dezenas por passo o script deve eleger para que seja selecionado aleatóriamente 1 e adicionado ao jogo por passo.
+Escolha quantas dezenas o script deve eleger para que seja selecionado aleatóriamente 1 e adicionado ao jogo por passo.
