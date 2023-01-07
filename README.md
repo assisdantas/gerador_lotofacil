@@ -1,4 +1,4 @@
-# gerador_lotofacil
+# Gerador Lotofácil
 Gerador de jogos da lotofácil
 
 Gerador de jogos da lotofácil usando pesos estátisticos obtidos dos 2.707 resultados anteriores. Cada bola tem uma dezena com maior e menor probalidade de ser sorteado, estas foram mapeadas e pesadas usando estátisca. Cada dezena tem um peso específico que é levado em conta na hora da escolha pseudo-aleatória para geração dos jogos.
@@ -10,3 +10,12 @@ Para executar, rode o comando no seu terminal
 ```
 python joga.py
 ```
+
+### Número de jogos
+Escolha a quantidade de jogos que deseja que o script gere.
+
+### Número de dezenas
+Escolha quantas dezenas o script deve colocar em cada jogo. O limite é 16, devido a verificação das estátisticas mais difíceis de alcançar com mais dezenas por jogo. As estatísticas limitam-se a 15 dezenas pois todos os resultados anteriore possuem 15 dezenas.
+
+### Número de dezenas por escolha
+Escolha quantas dezenas por peso o script deve eleger para ser selecionado uma aleatóriamente deste conjunto e adicionado ao jogo.
