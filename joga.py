@@ -148,7 +148,7 @@ while (j <= num_jogos) or (novo == True):
            
     while len(jogo) < qtd_bolas:
         
-        bolas_melhores = random.choices(bolas, weights=globals()[pesos], k=15)
+        bolas_melhores = random.choices(bolas, weights=globals()[pesos], k=qtd_sorte)
         bola = np.random.choice(bolas_melhores)
         
         if bola not in jogo:
