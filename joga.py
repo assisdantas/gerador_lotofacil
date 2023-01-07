@@ -127,8 +127,8 @@ qtd_sorte = int(input("Número de dezenas por escolha [10 até 25]: "))
 while (qtd_bolas < 15) or (qtd_bolas > 16):
     qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
     
-while (qtd_sorte < 10) or (qtd_bolas > 25):
-    qtd_sorte = int(input("Número de dezenas por escolha [10 até 25]: "))
+while (qtd_sorte < 10) or (qtd_bolas > 20):
+    qtd_sorte = int(input("Número de dezenas por escolha [10 até 20]: "))
     
 def conta_pares(jogo):
     pares = 0
