@@ -25,8 +25,8 @@ Exemplo:
 Entre com o último resultado (separe as dezenas por vírgula sem espaços): 1,2,3,5,6,13,14,16,18,19,21,22,23,24,25
 ```
 
-### Quantas dezenas utilizar do último sorteio [entre 6 e 12 ou 0]
-Informe quantas dezenas você deseja utilizar do último sorteio, geralmente entre 7 e 11 dezenas repetidas são uma boa escolha, você pode consultar as estátisticas em: https://www.lotodicas.com.br/lotofacil/estatisticas. Se você optar por não utilizar o concurso anterior, ainda poderá digitar 0.
+### Quantas dezenas utilizar do último sorteio [entre 6 e 12]
+Informe quantas dezenas você deseja utilizar do último sorteio, geralmente entre 7 e 11 dezenas repetidas são uma boa escolha, você pode consultar as estátisticas em: https://www.lotodicas.com.br/lotofacil/estatisticas.
 
 ### Número de dezenas [15 ou 16]
 Escolha quantas dezenas o script deve colocar em cada jogo. O limite é 16 devido a verificação das estátisticas que são mais difíceis de alcançar caso o jogo possua mais de 16 dezenas por jogo. As estatísticas limitam-se a 15 dezenas pois todos os resultados anteriores possuem 15 dezenas.
