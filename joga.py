@@ -23,9 +23,11 @@ jogos = []
 jogo = []
 
 # peso geral de cada dezena
-pd_geral = [0.594384927964536, 0.594384927964536, 0.606206132249723, 0.601403768008866, 0.607683782785371,
-            0.580716660509789, 0.585888437384559, 0.575914296268932, 0.599926117473218, 0.622829700775766,
-            0.618396749168822, 0.598079054303657, 0.613224972294052, 0.609900258588844, 0.594754340598448]
+pd_geral = {1: 0.594384927964536, 2: 0.594384927964536, 3: 0.606206132249723, 4: 0.601403768008866, 5: 0.607683782785371,
+            6: 0.580716660509789, 7: 0.585888437384559, 8: 0.575914296268932, 9: 0.599926117473218, 10: 0.622829700775766,
+            11: 0.618396749168822, 12: 0.598079054303657, 13: 0.613224972294052, 14: 0.609900258588844, 15: 0.594754340598448,
+            16: 0.578869597340229, 17: 0.591799039527152, 18: 0.596231991134097, 19: 0.596970816401921, 20: 0.623568526043591,
+            21: 0.5932766900628, 22: 0.598079054303657, 23: 0.586257850018471, 24: 0.610639083856668, 25: 0.615072035463613}
 
 # pesos das dezenas nas respectivas bolas
 pd_bola1 = [0.046915405, 0.036202438, 0.04063539, 0.041374215, 0.037310676, 
@@ -125,6 +127,9 @@ primos = 0
 novo = True
 lista = []
 tentativa = 1
+dez_ant = 0
+dez_ants = []
+dez_antsp = []
 total_tenta = 0
 pesos = ("pd_bola%s" %b)
 
@@ -136,17 +141,17 @@ while (usar_ant != "s") and (usar_ant != "n"):
 
 if (usar_ant == "s"):
 
-    u_res = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
-    lista = u_res.split(',')
-    while(len(lista) < 14):
-        u_res = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
-        lista = u_res.split(',')
+    lista = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
+    u_res = lista.split(',')
+    while(len(u_res) < 14):
+        lista = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
+        u_res = lista.split(',')
 
-    dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11 ou 0 para não utilizar]? "))
+    dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11]? "))
     while (dez_ant < 7) or (dez_ant > 11):
-        dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11 ou 0 para não utilizar]? "))
-
-dez_ant = 0
+        dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11]? "))
+else:
+    dez_ant = 0
 
 qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
 while (qtd_bolas < 15) or (qtd_bolas > 16):
@@ -172,16 +177,27 @@ inicio = time.time()
 
 while (j <= num_jogos) or (novo == True):
     
-    if (dez_ant != 0):
-        dez_ants = random.choices(bolas, weights=pd_geral, k=dez_ant)
-        jogo.extend(dez_ants)
+    if (dez_ant > 0):
+        
+        for da in u_res:
+            dez_antsp.append(pd_geral[int(da)])
+    
+    while (len(dez_ants) < dez_ant):    
+        
+        mdez_ants = random.choices(u_res, weights=dez_antsp, k=dez_ant)
+        mdez_ant = np.random.choice(mdez_ants)
+        
+        if (mdez_ant not in dez_ants):
+            dez_ants.append(mdez_ant)
+        
+    jogo.extend(list(map(int, dez_ants)))
            
-    while len(jogo) < qtd_bolas:
+    while (len(jogo) < qtd_bolas):
         
         bolas_melhores = random.choices(bolas, weights=globals()[pesos], k=qtd_sorte)
         bola = np.random.choice(bolas_melhores)
         
-        if bola not in jogo:
+        if (bola not in jogo):
             jogo.append(bola)
             b += 1
             if (b == 16):
@@ -212,11 +228,16 @@ while (j <= num_jogos) or (novo == True):
         print("Soma:", sum(jogo), "[i] Melhor entre 166 e 227")
         print("Fibbonacci:", jogo_fib, "[i] Melhor entre 2 e 5")
         print("Média:", media, "[i] Melhor entre 13 e 15") 
-        print("Pares/Ímpares:", conta_pares(jogo), "[i] Melhor 6~9/9~6")       
+        print("Pares/Ímpares:", conta_pares(jogo), "[i] Melhor 6~9/9~6")
+        print("Dezenas utilizadas do resultado anteior %s:" %dez_ant, dez_ants)       
         
         j += 1
         jogos.append(sorted(jogo))
         jogo = []
+        dez_antsp = []
+        bolas_melhores = []
+        mdez_ants = []
+        dez_ants = []
         b = 1
         primos = 0
         mult = 0
@@ -229,6 +250,10 @@ while (j <= num_jogos) or (novo == True):
         # print('''\033[K Tentativa %s para gerar o jogo %s. Jogo: %s''' %(tentativa, j, jogo), end="\r")
         tentativa += 1
         jogo = []
+        dez_antsp = []
+        bolas_melhores = []
+        mdez_ants = []
+        dez_ants = []
         b = 1
         primos = 0
         mult = 0
