@@ -2,11 +2,12 @@
 #   resultados anteriores. Cada bola tem uma dezena com maior e menor probalidade
 #   de ser sorteado, estas foram mapeadas e pesadas usando estátisca. Cada dezena
 #   tem um peso específico que é levado em conta na hora da escolha pseudo-aleatória
-#   para geração dos jogos.
+#   para geração dos jogos. Para mais informações consulte: https://www.lotodicas.com.br/lotofacil/estatisticas
 #
 #   Resultados podem ser baixados em: https://asloterias.com.br/download-todos-resultados-lotofacil
 #   Arquivo para processamento do resultado pode ser feito com PowerBI com modelo em: 
 #   https://github.com/assisdantas/gerador_lotofacil
+#
 #
 
 import random
