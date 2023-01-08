@@ -17,8 +17,14 @@ import csv
 # bolas do bilhete
 fibonacci = [1, 2, 3, 5, 8, 13, 21]
 bolas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+ult_concurso = []
 jogos = []
 jogo = []
+
+# peso geral de cada dezena
+pd_geral = [0.594384927964536, 0.594384927964536, 0.606206132249723, 0.601403768008866, 0.607683782785371,
+            0.580716660509789, 0.585888437384559, 0.575914296268932, 0.599926117473218, 0.622829700775766,
+            0.618396749168822, 0.598079054303657, 0.613224972294052, 0.609900258588844, 0.594754340598448]
 
 # pesos das dezenas nas respectivas bolas
 pd_bola1 = [0.046915405, 0.036202438, 0.04063539, 0.041374215, 0.037310676, 
@@ -116,19 +122,38 @@ b = 1
 mult = 0
 primos = 0
 novo = True
+lista = []
 tentativa = 1
 total_tenta = 0
 pesos = ("pd_bola%s" %b)
 
-num_jogos = int(input("Quantos jogos gerar? "))
-qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
-qtd_sorte = int(input("Número de dezenas por escolha [10 até 25]: "))
+num_jogos = int(input("Quantos jogos você quer gerar? "))
 
+usar_ant = (input("Deseja utilizar o concurso anteior [s: sim, n: não]? "))
+while (usar_ant != "s") and (usar_ant != "n"):
+    usar_ant = (input("Deseja utilizar o concurso anteior [s: sim, n: não]? "))
+
+if (usar_ant == "s"):
+
+    u_res = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
+    lista = u_res.split(',')
+    while(len(lista) < 14):
+        u_res = input("Entre com o último resultado (separe as dezenas por vírgula sem espaços): ")
+        lista = u_res.split(',')
+
+    dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11 ou 0 para não utilizar]? "))
+    while (dez_ant < 7) or (dez_ant > 11):
+        dez_ant = int(input("Quantas dezenas deste último concurso deseja utilizar [Entre 6~12, melhor 7~11 ou 0 para não utilizar]? "))
+
+dez_ant = 0
+
+qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
 while (qtd_bolas < 15) or (qtd_bolas > 16):
     qtd_bolas = int(input("Quantas dezenas por jogo [15 até 16]? "))
-    
+
+qtd_sorte = int(input("Número de dezenas por escolha [Melhor 10~20]: "))
 while (qtd_sorte < 10) or (qtd_bolas > 20):
-    qtd_sorte = int(input("Número de dezenas por escolha [10 até 20]: "))
+    qtd_sorte = int(input("Número de dezenas por escolha [Melhor 10~20]: "))
     
 def conta_pares(jogo):
     pares = 0
@@ -145,6 +170,10 @@ def conta_pares(jogo):
 inicio = time.time()
 
 while (j <= num_jogos) or (novo == True):
+    
+    if (dez_ant != 0):
+        dez_ants = random.choices(bolas, weights=pd_geral, k=dez_ant)
+        jogo.extend(dez_ants)
            
     while len(jogo) < qtd_bolas:
         
